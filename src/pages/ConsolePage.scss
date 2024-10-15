@@ -5,11 +5,11 @@
   font-weight: 400;
   font-style: normal;
   font-size: 12px;
-  height: 100%;
+  height: 100vh; /* Changed from 100% to 100vh */
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin: 0px 8px;
+  margin: 0 8px;
 
   & > div {
     flex-shrink: 0;
@@ -41,10 +41,11 @@
   .content-main {
     flex-grow: 1;
     flex-shrink: 1 !important;
-    margin: 0px 16px;
+    margin: 0 16px;
     display: flex;
     overflow: hidden;
     margin-bottom: 24px;
+    height: 100%; /* Added to ensure full height */
 
     .content-block {
       position: relative;
@@ -64,13 +65,13 @@
         color: #6e6e7f;
         position: relative;
         flex-grow: 1;
-        padding: 8px 0px;
+        padding: 8px 0;
         padding-top: 4px;
         line-height: 1.2em;
         overflow: auto;
 
         &.full {
-          padding: 0px;
+          padding: 0;
         }
       }
     }
@@ -155,13 +156,11 @@
       }
 
       .conversation {
-        display: flex;
-        flex-shrink: 0;
-        width: 100%;
-        overflow: hidden;
-        height: 200px;
-        min-height: 0;
-        max-height: 200px;
+        /* Removed fixed height for flexibility */
+        height: auto;
+        max-height: none;
+        flex-grow: 1;
+        overflow: auto;
         border-top: 1px solid #e7e7e7;
       }
     }
@@ -179,7 +178,7 @@
 
     .close {
       position: absolute;
-      top: 0px;
+      top: 0;
       right: -20px;
       background: #aaa;
       color: #fff;
@@ -227,13 +226,13 @@
     border-radius: 3px;
     white-space: pre;
     display: flex;
-    padding: 0px;
+    padding: 0;
     gap: 16px;
 
     .event-timestamp {
       text-align: left;
       gap: 8px;
-      padding: 4px 0px;
+      padding: 4px 0;
       width: 80px;
       flex-shrink: 0;
       margin-right: 16px;
@@ -247,7 +246,7 @@
 
       .event-summary {
         padding: 4px 8px;
-        margin: 0px -8px;
+        margin: 0 -8px;
         cursor: pointer;
         display: flex;
         gap: 8px;
@@ -321,26 +320,27 @@
   }
 
   /* ==========================
-     Responsive Styles
+     Updated Responsive Styles
   ========================== */
 
   /* Breakpoint for tablets and below */
   @media (max-width: 900px) {
     .content-main {
       flex-direction: column;
-      margin: 0px 8px;
+      margin: 0 8px;
       margin-bottom: 16px;
 
       .content-right {
         width: 100%;
-        margin-left: 0px;
+        margin-left: 0;
         margin-top: 24px;
       }
 
       .content-logs {
         .conversation {
-          height: 150px;
-          max-height: 150px;
+          /* Optional: Adjust height if needed */
+          height: auto;
+          max-height: none;
         }
       }
     }
@@ -349,60 +349,39 @@
   /* Breakpoint for mobile devices */
   @media (max-width: 600px) {
     font-size: 10px; /* Slightly smaller font for mobile */
+    margin: 0 4px;
 
-    margin: 0px 4px;
-
-    .content-top {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 8px;
-
-      .content-title {
-        gap: 8px;
-
-        img {
-          width: 20px;
-          height: 20px;
-        }
-
-        span {
-          font-size: 1rem;
-        }
-      }
+    /* Hide non-essential components */
+    .content-top,
+    .content-right,
+    .visualization,
+    .content-logs .events,
+    .content-logs .content-actions {
+      display: none;
     }
 
+    /* Allow content-main to take full height */
     .content-main {
-      margin: 0px 4px;
       flex-direction: column;
-
-      .content-right {
-        margin-top: 16px;
-        gap: 16px;
-
-        & > div.kv {
-          height: 200px;
-          max-height: 200px;
-
-          .content-block-body {
-            padding: 12px;
-            margin-top: 48px;
-          }
-        }
-      }
+      margin: 0 8px;
+      margin-bottom: 0; /* Remove bottom margin */
 
       .content-logs {
-        .conversation {
-          height: 120px;
-          max-height: 120px;
-        }
+        flex-grow: 1;
+        overflow: hidden;
 
-        & > .content-actions {
-          flex-direction: column;
-          gap: 12px;
+        .conversation {
+          /* Let conversation fill the available space */
+          height: auto;
+          max-height: none;
+          flex-grow: 1;
+          overflow-y: auto;
+          border-top: none; /* Optional: Remove border for cleaner look */
         }
       }
     }
 
+    /* Adjust conversation panel styling */
     .conversation-item {
       gap: 12px;
 
@@ -416,29 +395,26 @@
       }
     }
 
+    /* Optional: Ensure audio elements are responsive */
+    .conversation-item audio {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Adjust event styling if events are shown */
     .event {
       flex-direction: column;
       gap: 8px;
 
       .event-timestamp {
         width: 100%;
-        margin-right: 0px;
+        margin-right: 0;
       }
 
       .event-details {
         .event-summary {
           padding: 4px 6px;
         }
-      }
-    }
-
-    .visualization {
-      bottom: 2px;
-      right: 4px;
-
-      .visualization-entry {
-        height: 30px;
-        width: 80px;
       }
     }
   }

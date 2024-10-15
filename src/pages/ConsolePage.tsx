@@ -21,7 +21,6 @@ import { WavRenderer } from '../utils/wav_renderer';
 
 import { X, Edit, Zap, ArrowUp, ArrowDown } from 'react-feather';
 import { Button } from '../components/button/Button';
-import { Toggle } from '../components/toggle/Toggle';
 import { Map } from '../components/Map';
 
 import './ConsolePage.scss';
@@ -116,7 +115,7 @@ export function ConsolePage() {
     [key: string]: boolean;
   }>({});
   const [isConnected, setIsConnected] = useState(false);
-  const [canPushToTalk, setCanPushToTalk] = useState(true);
+  const [canPushToTalk, setCanPushToTalk] = useState(false); // Set to false by default
   const [isRecording, setIsRecording] = useState(false);
   const [memoryKv, setMemoryKv] = useState<{ [key: string]: any }>({});
   const [coords, setCoords] = useState<Coordinates | null>({
@@ -252,22 +251,8 @@ export function ConsolePage() {
   };
 
   /**
-   * Switch between Manual <> VAD mode for communication
+   * Removed changeTurnEndType function as it's no longer needed
    */
-  const changeTurnEndType = async (value: string) => {
-    const client = clientRef.current;
-    const wavRecorder = wavRecorderRef.current;
-    if (value === 'none' && wavRecorder.getStatus() === 'recording') {
-      await wavRecorder.pause();
-    }
-    client.updateSession({
-      turn_detection: value === 'none' ? null : { type: 'server_vad' },
-    });
-    if (value === 'server_vad' && client.isConnected()) {
-      await wavRecorder.record((data) => client.appendInputAudio(data.mono));
-    }
-    setCanPushToTalk(value === 'none');
-  };
 
   /**
    * Auto-scroll the event logs
@@ -380,6 +365,9 @@ export function ConsolePage() {
     client.updateSession({ instructions: instructions });
     // Set transcription, otherwise we don't get user transcriptions back
     client.updateSession({ input_audio_transcription: { model: 'whisper-1' } });
+
+    // Always set turn_detection to 'server_vad'
+    client.updateSession({ turn_detection: { type: 'server_vad' } });
 
     // Add tools
     client.addTool(
@@ -663,12 +651,7 @@ export function ConsolePage() {
             </div>
           </div>
           <div className="content-actions">
-            <Toggle
-              defaultValue={false}
-              labels={['manual', 'vad']}
-              values={['none', 'server_vad']}
-              onChange={(_, value) => changeTurnEndType(value)}
-            />
+            {/* Removed the Toggle component */}
             <div className="spacer" />
             {isConnected && canPushToTalk && (
               <Button
@@ -718,12 +701,12 @@ export function ConsolePage() {
               )}
             </div>
           </div>
-          <div className="content-block kv">
+          {/* <div className="content-block kv">
             <div className="content-block-title">set_memory()</div>
             <div className="content-block-body content-kv">
               {JSON.stringify(memoryKv, null, 2)}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
