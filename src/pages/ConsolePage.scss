@@ -5,11 +5,12 @@
   font-weight: 400;
   font-style: normal;
   font-size: 12px;
-  height: 100vh; /* Changed from 100% to 100vh */
+  height: 100vh; /* Ensures full viewport height */
   display: flex;
   flex-direction: column;
   overflow: hidden;
   margin: 0 8px;
+  background-color: #121212; /* Dark background */
 
   & > div {
     flex-shrink: 0;
@@ -24,6 +25,7 @@
     align-items: center;
     padding: 8px 16px;
     min-height: 40px;
+    background-color: #1e1e1e; /* Surface color */
 
     .content-title {
       flex-grow: 1;
@@ -35,6 +37,12 @@
         width: 24px;
         height: 24px;
       }
+
+      span {
+        color: #e0e0e0; /* Light text */
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
     }
   }
 
@@ -45,7 +53,8 @@
     display: flex;
     overflow: hidden;
     margin-bottom: 24px;
-    height: 100%; /* Added to ensure full height */
+    height: 100%; /* Ensures full height */
+    background-color: #121212; /* Maintain dark background */
 
     .content-block {
       position: relative;
@@ -53,16 +62,20 @@
       flex-direction: column;
       max-height: 100%;
       width: 100%;
+      background-color: #1e1e1e; /* Surface color */
+      border: 1px solid #333333; /* Dark border */
 
       .content-block-title {
         flex-shrink: 0;
         padding-top: 16px;
         padding-bottom: 4px;
         position: relative;
+        color: #e0e0e0; /* Light text */
+        font-size: 1.2rem;
       }
 
       .content-block-body {
-        color: #6e6e7f;
+        color: #e0e0e0; /* Light text */
         position: relative;
         flex-grow: 1;
         padding: 8px 0;
@@ -83,6 +96,8 @@
       flex-direction: column;
       margin-left: 24px;
       gap: 24px;
+      background-color: #1e1e1e; /* Surface color */
+      border: 1px solid #333333; /* Dark border */
 
       & > div {
         border-radius: 16px;
@@ -90,6 +105,7 @@
         flex-shrink: 0;
         overflow: hidden;
         position: relative;
+        background-color: #2c2c2c; /* Slightly lighter surface for distinction */
 
         .content-block-title {
           position: absolute;
@@ -100,12 +116,13 @@
           top: 16px;
           left: 16px;
           padding: 4px 16px;
-          background-color: #fff;
+          background-color: #1e1e1e;
           border-radius: 1000px;
           min-height: 32px;
           z-index: 9999;
           text-align: center;
           white-space: pre;
+          color: #e0e0e0; /* Light text */
 
           &.bottom {
             top: auto;
@@ -119,11 +136,12 @@
         height: 250px;
         max-height: 250px;
         white-space: pre;
-        background-color: #ececf1;
+        background-color: #2c2c2c; /* Slightly lighter surface */
 
         .content-block-body {
           padding: 16px;
           margin-top: 56px;
+          color: #e0e0e0; /* Light text */
         }
       }
     }
@@ -133,6 +151,8 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      background-color: #1e1e1e; /* Surface color */
+      border: 1px solid #333333; /* Dark border */
 
       & > div {
         flex-grow: 1;
@@ -145,6 +165,8 @@
         align-items: center;
         justify-content: center;
         gap: 16px;
+        padding: 8px 0;
+        background-color: #2c2c2c; /* Slightly lighter surface */
       }
 
       & > div.events {
@@ -152,7 +174,7 @@
       }
 
       .events {
-        border-top: 1px solid #e7e7e7;
+        border-top: 1px solid #333333; /* Darker border for separation */
       }
 
       .conversation {
@@ -161,7 +183,7 @@
         max-height: none;
         flex-grow: 1;
         overflow: auto;
-        border-top: 1px solid #e7e7e7;
+        border-top: 1px solid #333333; /* Darker border */
       }
     }
   }
@@ -171,6 +193,9 @@
     display: flex;
     gap: 16px;
     margin-bottom: 16px;
+    background-color: #2c2c2c; /* Slightly lighter surface */
+    padding: 8px;
+    border-radius: 8px;
 
     &:not(:hover) .close {
       display: none;
@@ -178,23 +203,24 @@
 
     .close {
       position: absolute;
-      top: 0;
+      top: 8px;
       right: -20px;
-      background: #aaa;
+      background: #cf6679; /* Red for delete */
       color: #fff;
       display: flex;
-      border-radius: 16px;
-      padding: 2px;
+      border-radius: 50%;
+      padding: 4px;
       cursor: pointer;
+      transition: background 0.3s;
 
       &:hover {
-        background: #696969;
+        background: #ff5c5c; /* Lighter red on hover */
       }
 
       svg {
-        stroke-width: 3;
-        width: 12px;
-        height: 12px;
+        stroke-width: 2;
+        width: 16px;
+        height: 16px;
       }
     }
 
@@ -205,20 +231,30 @@
       width: 80px;
       flex-shrink: 0;
       margin-right: 16px;
+      font-weight: bold;
 
       &.user {
-        color: #0099ff;
+        color: #bb86fc; /* Accent color for user */
       }
 
       &.assistant {
-        color: #009900;
+        color: #03dac6; /* Teal for assistant */
       }
     }
 
     .speaker-content {
-      color: #18181b;
+      color: #e0e0e0; /* Light text */
       overflow: hidden;
       word-wrap: break-word;
+
+      audio {
+        margin-top: 8px;
+      }
+    }
+
+    audio {
+      border-radius: 4px;
+      outline: none;
     }
   }
 
@@ -226,8 +262,10 @@
     border-radius: 3px;
     white-space: pre;
     display: flex;
-    padding: 0;
+    padding: 8px;
     gap: 16px;
+    background-color: #2c2c2c; /* Slightly lighter surface */
+    margin-bottom: 8px;
 
     .event-timestamp {
       text-align: left;
@@ -236,12 +274,13 @@
       width: 80px;
       flex-shrink: 0;
       margin-right: 16px;
+      color: #b0b0b0; /* Secondary text color */
     }
 
     .event-details {
       display: flex;
       flex-direction: column;
-      color: #18181b;
+      color: #e0e0e0; /* Light text */
       gap: 8px;
 
       .event-summary {
@@ -251,10 +290,13 @@
         display: flex;
         gap: 8px;
         align-items: center;
+        background-color: #1e1e1e; /* Surface color */
+        border-radius: 8px;
+        transition: background-color 0.3s;
 
         &:hover {
           border-radius: 8px;
-          background-color: #f0f0f0;
+          background-color: #333333; /* Darker background on hover */
         }
 
         .event-source {
@@ -262,25 +304,33 @@
           display: flex;
           align-items: center;
           gap: 8px;
+          color: #03dac6; /* Teal for sources */
 
           &.client {
-            color: #0099ff;
+            color: #03dac6; /* Teal */
           }
 
           &.server {
-            color: #009900;
+            color: #bb86fc; /* Purple */
           }
 
           &.error {
-            color: #990000;
+            color: #cf6679; /* Red */
           }
 
           svg {
-            stroke-width: 3;
-            width: 12px;
-            height: 12px;
+            stroke-width: 2;
+            width: 16px;
+            height: 16px;
           }
         }
+      }
+
+      .event-payload {
+        background-color: #1e1e1e; /* Surface color */
+        padding: 8px;
+        border-radius: 4px;
+        overflow: auto;
       }
     }
   }
@@ -294,6 +344,8 @@
     border-radius: 16px;
     z-index: 10;
     gap: 2px;
+    background-color: #1e1e1e; /* Surface color */
+    border: 1px solid #333333; /* Dark border */
 
     .visualization-entry {
       position: relative;
@@ -304,17 +356,18 @@
       gap: 4px;
 
       &.client {
-        color: #0099ff;
+        color: #03dac6; /* Teal */
       }
 
       &.server {
-        color: #009900;
+        color: #bb86fc; /* Purple */
       }
 
       canvas {
         width: 100%;
         height: 100%;
         color: currentColor;
+        background-color: #1e1e1e; /* Match visualization background */
       }
     }
   }
